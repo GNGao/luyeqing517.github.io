@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Summary of PLINK | Gridea</title>
-<link rel="shortcut icon" href="https://luyeqing517.github.io//favicon.ico?v=1561561642450">
+<link rel="shortcut icon" href="https://luyeqing517.github.io//favicon.ico?v=1561578252869">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://luyeqing517.github.io//styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://luyeqing517.github.io/">
-  <img class="avatar" src="https://luyeqing517.github.io//images/avatar.png?v=1561561642450" alt="">
+  <img class="avatar" src="https://luyeqing517.github.io//images/avatar.png?v=1561578252869" alt="">
   </a>
   <h1 class="site-title">
     Gridea
@@ -78,7 +78,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-06-21 ·
+                · 2019-06-20 ·
               </time>
               
                 <a href="https://luyeqing517.github.io//tag/lTyNKts1T" class="post-tag">
@@ -125,9 +125,20 @@
 <li>
 <p>显著的SNP
 由1 和2 组成的2n个序列，每一个SNP 基因型对应两个序列。
-对于任意一个个体的SNP 基因型数据进行处理（忽略ACGT 的差别）如22,21,12,11 分别对应于SNP 基因型,aa aA Aa AA。然后把这些序列转换为 由0、1、2 组成的数量为n的SNP 序列，表示为：</p>
+对于任意一个个体的SNP 基因型数据进行处理（忽略ACGT 的差别）如22,21,12,11 分别对应于SNP 基因型,aa aA Aa AA。然后把这些序列转换为 由0、1、2 组成的数量为n的SNP 序列，表示为：
+第i个个体的SNP基因型为：
+第j个个体的SNP基因型为：
+这两个个体间的第K个snp的IBS状态为：</p>
 </li>
 </ul>
+<p>把N个体的数据分成case和control两组进行分析，其中case包含个l个体，control包含m个个体，然后对这两组数据分别进行评价分析，对每个SNP 得到各自的S值。
+差异值最大的snp位点就可能为我们的候选位点。</p>
+<h3 id="gwas的基本原理">GWAS的基本原理</h3>
+<p>借助于SNP分子遗传标记，进行总体关联分析，在全基因组范围内选择遗传变异进行基因分析，比较异常和对照组之间每个遗传变异及其频率的差异，统计分析每个变异与目标性状之间的关联性大小，选出最相关的遗传变异进行验证，并根据验证结果最终确认其与目标性状之间的相关性。
+Example:
+青藏高原的居民对极端的高海拔的适应研究。作者测了50个藏族的外显子组。找到了青藏高原居民的基因中等位基因频率变化的候选基因。
+并通过关联分析最后验证出EPAS1基因与他们的高海拔适应性状具有最高的相关性。
+<img src="https://luyeqing517.github.io//post-images/1561578172625.png" alt=""></p>
 <h2 id="step-1-数据描述和过滤">Step 1: 数据描述和过滤</h2>
 <h3 id="指标">指标：</h3>
 <ul>
@@ -181,7 +192,9 @@ Hardy-Weinberg proportions for two alleles.
 </ul>
 <h4 id="linkage-disequilibrium-based-snp">Linkage disequilibrium based SNP</h4>
 <p>连锁不平衡 LD
-(wiki)</p>
+P（AB）≠P（A）*P（B）
+P (AB) =  D + P (A) * P (B) , D: LD degree between two nucleotides.</p>
+<p>(wiki)</p>
 <blockquote>
 <p>In population genetics, linkage disequilibrium is the <strong>non-random association of alleles at different loci in a given population</strong>. Loci are said to be in linkage disequilibrium when the <strong>frequency of association</strong> of their <strong>different alleles</strong> is <strong>higher or lower</strong> than what would be <strong>expected</strong> if the loci were <strong>independent</strong> and associated randomly.[1]</p>
 <p>Linkage disequilibrium is influenced by many <strong>factors</strong>, including <strong>selection</strong>, the rate of genetic <strong>recombination</strong>, <strong>mutation</strong> rate, genetic <strong>drift</strong>, the system of <strong>mating</strong>, <strong>population</strong> structure, and genetic <strong>linkage</strong>. As a result, the pattern of linkage disequilibrium in a genome is a powerful signal of the population genetic processes that are structuring it.</p>
