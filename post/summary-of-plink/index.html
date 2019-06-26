@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Summary of PLINK | Gridea</title>
-<link rel="shortcut icon" href="https://luyeqing517.github.io//favicon.ico?v=1561558230494">
+<link rel="shortcut icon" href="https://luyeqing517.github.io//favicon.ico?v=1561559947650">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://luyeqing517.github.io//styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://luyeqing517.github.io/">
-  <img class="avatar" src="https://luyeqing517.github.io//images/avatar.png?v=1561558230494" alt="">
+  <img class="avatar" src="https://luyeqing517.github.io//images/avatar.png?v=1561559947650" alt="">
   </a>
   <h1 class="site-title">
     Gridea
@@ -95,10 +95,13 @@
               
             </div>
             
+              <div class="post-feature-image" style="background-image: url('https://luyeqing517.github.io//post-images/summary-of-plink.png')">
+              </div>
+            
             <div class="post-content">
               <p>This is a summary of using PLINK to deal with sequencing data.</p>
 <!-- more -->
-<h2 id="step-1-数据描述">Step 1: 数据描述。</h2>
+<h2 id="step-1-数据描述和过滤">Step 1: 数据描述和过滤</h2>
 <h3 id="指标">指标：</h3>
 <ul>
 <li>1.individuals with high missing genotype rates （具有高缺失基因型率的个体）</li>
@@ -153,8 +156,8 @@ Hardy-Weinberg proportions for two alleles.
 <p>连锁不平衡 LD
 (wiki)</p>
 <blockquote>
-<p>In population genetics, linkage disequilibrium is the non-random association of alleles at different loci in a given population. Loci are said to be in linkage disequilibrium when the frequency of association of their different alleles is higher or lower than what would be expected if the loci were independent and associated randomly.[1]</p>
-<p>Linkage disequilibrium is influenced by many factors, including selection, the rate of genetic recombination, mutation rate, genetic drift, the system of mating, population structure, and genetic linkage. As a result, the pattern of linkage disequilibrium in a genome is a powerful signal of the population genetic processes that are structuring it.</p>
+<p>In population genetics, linkage disequilibrium is the <strong>non-random association of alleles at different loci in a given population</strong>. Loci are said to be in linkage disequilibrium when the <strong>frequency of association</strong> of their <strong>different alleles</strong> is <strong>higher or lower</strong> than what would be <strong>expected</strong> if the loci were <strong>independent</strong> and associated randomly.[1]</p>
+<p>Linkage disequilibrium is influenced by many <strong>factors</strong>, including <strong>selection</strong>, the rate of genetic <strong>recombination</strong>, <strong>mutation</strong> rate, genetic <strong>drift</strong>, the system of <strong>mating</strong>, <strong>population</strong> structure, and genetic <strong>linkage</strong>. As a result, the pattern of linkage disequilibrium in a genome is a powerful signal of the population genetic processes that are structuring it.</p>
 <p>In spite of its name, linkage disequilibrium may exist between alleles at different loci without any genetic linkage between them and independently of whether or not allele frequencies are in equilibrium (not changing with time).[1] Furthermore, linkage disequilibrium is sometimes referred to as gametic phase disequilibrium;[2] however, the concept also applies to asexual organisms and therefore does not depend on the presence of gametes.</p>
 </blockquote>
 <h3 id="过滤">过滤</h3>
@@ -164,25 +167,50 @@ Hardy-Weinberg proportions for two alleles.
 <p>mind参数后面的数字控制了过滤的比例。(samples with missing frequency higher than this threshold are excluded)</p>
 <p>另外还有一个过滤参数是<code>--geno</code> ，这个参数默认值是0.1，是用来过滤每个snp中的missing freq的。</p>
 <h4 id="linkage-disequilibrium-based-snp-pruning">Linkage disequilibrium based SNP pruning</h4>
+<p>如果是单标记回归，可以不做，影响不大，最多影响速度，但是在多标记回归算基因互作的问题中，应该要做删选，因为不做的话会把连锁的snp误当做是基因互作。</p>
+<p>如果做了LD，那么扫描出来的点可能很明显，只有一个，如果没有做LD,可能扫描出来的点是一团。</p>
+<p>有两种方法可以做，这里只说一种</p>
+<pre><code>plink --bfile core_v0.7 --indep-pairwise 50 5 0.5
+</code></pre>
+<p>会产生两个文件，一个是plink.prune.in，一个是plink.prune.out:
+这个文件是可以用来做删选的参数的</p>
+<pre><code>plink --bfile core_v0.7 --extract plink.prune.in --make-bed --out pruneddata
+</code></pre>
+<p>会产生过滤好的结果。</p>
+<p>其他过滤。。。</p>
+<h3 id="数据summary和数据过滤的命令之间的差异">数据summary和数据过滤的命令之间的差异</h3>
+<p>对于我们自然群体，没有家系结构，所以主要是
+--mind N 删个体（基于缺失率）
+--geno N 删snp（基于缺失率）
+--maf N 删snp （基于最小等位基因频率）
+--hwe N 删snp （基于A和a不符合哈德温伯格平衡）
+--LD（这个一般不做双基因互作的话不考虑）</p>
+<pre><code>plink --bfile core_v0.7 --mind 0.1 --maf 0.05 --geno 0.1 --hwe 0.01 --make-bed --out clean
+</code></pre>
+<p>这样可以生成过滤好的文件，进行下一步分析。</p>
+<h2 id="step-2主成分分析和群体分层">Step 2：主成分分析和群体分层</h2>
+<h3 id="pca">PCA</h3>
+<pre><code>plink --bfile clean --pca 5 --out clean
+</code></pre>
+<p>产生两个文件
+eigenval eigenvec
+这个文件是看每个主成分可以解释多少基因的变异</p>
+<h3 id="clustering">clustering</h3>
+<h2 id="step-3关联分析">Step 3：关联分析</h2>
+<p>association analysis 也是我们分析单标记回归得到的结果（P值）的一步
+主要介绍一个Linear and logistic models</p>
 <h6 id="参考">参考：</h6>
-<p>作者：小郑的学习笔记
+<ol>
+<li>作者：小郑的学习笔记
 链接：https://www.jianshu.com/p/57c2dbda8a86
 来源：简书
-简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。</p>
+简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。</li>
+</ol>
 
             </div>
           </article>
         </div>
 
-        
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://luyeqing517.github.io//post/hello-gridea">
-              <h3 class="post-title">
-                Hello Gridea
-              </h3>
-            </a>
-          </div>
         
 
         
