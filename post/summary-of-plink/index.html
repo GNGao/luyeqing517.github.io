@@ -1,0 +1,136 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Summary of PLINK | Gridea</title>
+<link rel="shortcut icon" href="https://luyeqing517.github.io//favicon.ico?v=1561556614749">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://luyeqing517.github.io//styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://luyeqing517.github.io/">
+  <img class="avatar" src="https://luyeqing517.github.io//images/avatar.png?v=1561556614749" alt="">
+  </a>
+  <h1 class="site-title">
+    Gridea
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Summary of PLINK
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2019-06-25 ·
+              </time>
+              
+            </div>
+            
+            <div class="post-content">
+              <h2 id="step-1-数据描述">Step 1: 数据描述。</h2>
+<h3 id="指标">指标：</h3>
+<p>1.individuals with high missing genotype rates （具有高缺失基因型率的个体）
+2.missing genotype rate（缺失基因型率统计）
+3.minor allele frequency （一个snp上最小等位基因频率）
+4.Hardy-Weinberg equilibrium failures（不符合哈德温伯格平衡的（认为这个位点和群体结构有关））
+5.Linkage disequilibrium based SNP pruning（基于连锁不平衡筛选snp标记）</p>
+<h4 id="查看缺失率">查看缺失率：</h4>
+<pre><code>plink --bfile test --missing
+</code></pre>
+<p>会生成两个文件，
+一个是imiss,记录了样本的missing data
+一个是lmiss,记录了snp的missing data</p>
+<h3 id="过滤">过滤</h3>
+<h4 id="过滤具有高缺失基因型率的个体">过滤具有高缺失基因型率的个体</h4>
+<pre><code>plink --bfile core_v0.7 --mind 0.1 --make-bed --out test
+</code></pre>
+<p>mind参数后面的数字控制了过滤的比例。(samples with missing frequency higher than this threshold are excluded)</p>
+<p>另外还有一个过滤参数是<code>--geno</code> ，这个参数默认值是0.1，是用来过滤每个snp中的missing freq的。</p>
+
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://luyeqing517.github.io//post/test">
+              <h3 class="post-title">
+                Test
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | 
+  <a class="rss" href="https://luyeqing517.github.io//atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>
