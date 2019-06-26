@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://luyeqing517.github.io/</id>
     <title>Gridea</title>
-    <updated>2019-06-26T13:43:46.275Z</updated>
+    <updated>2019-06-26T13:52:14.570Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://luyeqing517.github.io/"/>
     <link rel="self" href="https://luyeqing517.github.io//atom.xml"/>
@@ -15,20 +15,30 @@
         <id>https://luyeqing517.github.io//post/summary-of-plink</id>
         <link href="https://luyeqing517.github.io//post/summary-of-plink">
         </link>
-        <updated>2019-06-26T00:36:10.000Z</updated>
+        <updated>2019-06-24T22:36:10.000Z</updated>
         <content type="html"><![CDATA[<h2 id="step-1-数据描述">Step 1: 数据描述。</h2>
 <h3 id="指标">指标：</h3>
-<p>1.individuals with high missing genotype rates （具有高缺失基因型率的个体）
-2.missing genotype rate（缺失基因型率统计）
-3.minor allele frequency （一个snp上最小等位基因频率）
-4.Hardy-Weinberg equilibrium failures（不符合哈德温伯格平衡的（认为这个位点和群体结构有关））
-5.Linkage disequilibrium based SNP pruning（基于连锁不平衡筛选snp标记）</p>
+<ul>
+<li>1.individuals with high missing genotype rates （具有高缺失基因型率的个体）</li>
+<li>2.missing genotype rate（缺失基因型率统计）</li>
+<li>3.minor allele frequency （一个snp上最小等位基因频率）</li>
+<li>4.Hardy-Weinberg equilibrium failures（不符合哈德温伯格平衡的（认为这个位点和群体结构有关））</li>
+<li>5.Linkage disequilibrium based SNP pruning（基于连锁不平衡筛选snp标记）</li>
+</ul>
 <h4 id="查看缺失率">查看缺失率：</h4>
 <pre><code>plink --bfile test --missing
 </code></pre>
 <p>会生成两个文件，
 一个是imiss,记录了样本的missing data
 一个是lmiss,记录了snp的missing data</p>
+<h4 id="hardy-weinberg-equilibrium-failures">Hardy-Weinberg equilibrium failures</h4>
+<p><img src="https://luyeqing517.github.io//post-images/1561556974288.png" alt="">
+Hardy-Weinberg proportions for two alleles.</p>
+<blockquote>
+<p>The Hardy–Weinberg principle, also known as the Hardy–Weinberg equilibrium, model, theorem, or law, states that allele and genotype frequencies in a population will remain constant from generation to generation in the absence of other evolutionary influences. These influences include genetic drift, mate choice, assortative mating, natural selection, sexual selection, mutation, gene flow, meiotic drive, genetic hitchhiking, population bottleneck, founder effect and inbreeding.</p>
+<p>In the simplest case of a single locus with two alleles denoted A and a with frequencies f(A) = p and f(a) = q, respectively, the expected genotype frequencies under random mating are f(AA) = p2 for the AA homozygotes, f(aa) = q2 for the aa homozygotes, and f(Aa) = 2pq for the heterozygotes. In the absence of selection, mutation, genetic drift, or other forces, allele frequencies p and q are constant between generations, so equilibrium is reached.</p>
+<p>The principle is named after G. H. Hardy and Wilhelm Weinberg, who first demonstrated it mathematically. Hardy's paper was focused on debunking the then-commonly held view that a dominant allele would automatically tend to increase in frequency; today, confusion between dominance and selection is less common. Today, tests for Hardy-Weinberg genotype frequencies are used primarily to test for population stratification and other forms of non-random mating.</p>
+</blockquote>
 <h3 id="过滤">过滤</h3>
 <h4 id="过滤具有高缺失基因型率的个体">过滤具有高缺失基因型率的个体</h4>
 <pre><code>plink --bfile core_v0.7 --mind 0.1 --make-bed --out test
